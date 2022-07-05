@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 import { WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
+import {keyframes} from "styled-components";
 
 const ShoeCard = ({
   slug,
@@ -75,22 +76,59 @@ const Link = styled.a`
 
 const Wrapper = styled.article``;
 
-const ImageWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
-`;
 
 const Image = styled.img`
   width: 100%;
   border-radius: 16px 16px 4px 4px;
   transition:transform 300ms ease-out;
-  
+`;
+const zoomy = keyframes`
+  0% {
+    transform: translateX(0%) scale(1);
+  }
+  50% {
+    transform: translateX(-20%) scale(1.2);
+  }
+  100% {
+    transform: translateX(0%) scale(1);
+  }
+`;
+const Flag = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  background: red;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: ${14 / 18}rem;
+  font-weight: ${WEIGHTS.bold};
+  color: var(--color-white);
+  border-radius: 2px;
+`;
+
+const SaleFlag = styled(Flag)`
+  background-color: var(--color-primary);
+`;
+const NewFlag = styled(Flag)`
+  background-color: var(--color-secondary);
+ 
+`;
+const ImageWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+
   @media (prefers-reduced-motion: no-preference){
-    &:hover {
+    &:hover ${Image} {
       transform: scale(1.2) translateY(-10%);
+    }
+    &:hover ${SaleFlag} {
+      animation: ${zoomy} 2000ms 200ms ease-in-out infinite;
     }
   }
 `;
+
+
 
 
 
@@ -118,27 +156,6 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: var(--color-primary);
-`;
-
-const Flag = styled.div`
-  position: absolute;
-  top: 12px;
-  right: -4px;
-  background: red;
-  height: 32px;
-  line-height: 32px;
-  padding: 0 10px;
-  font-size: ${14 / 18}rem;
-  font-weight: ${WEIGHTS.bold};
-  color: var(--color-white);
-  border-radius: 2px;
-`;
-
-const SaleFlag = styled(Flag)`
-  background-color: var(--color-primary);
-`;
-const NewFlag = styled(Flag)`
-  background-color: var(--color-secondary);
 `;
 
 export default ShoeCard;
